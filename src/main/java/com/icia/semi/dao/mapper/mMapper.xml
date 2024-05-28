@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="MEMBER">
+	<select id="idCheck" parameterType="String" resultType="String"> 
+		SELECT MID FROM SEMIMEM WHERE MID = #{mId} 
+	</select>
+
+	<insert id="mJoin" parameterType="member"> 
+			 INSERT INTO SEMIMEM VALUES (#{mId}, #{mPw}, #{mName}, #{mBirth}, #{mEmail}, #{mPhone}, #{mAddr}, #{mProfileName}, 1000) 
+		</insert>
+
+	<select id="mView" parameterType="String" resultType="member"> 
+		SELECT * FROM SEMIMEM WHERE MID = #{mId} 
+	</select>
+	
+	<select id="mCount" resultType="int"> 
+		SELECT COUNT(*) FROM SEMIMEM 
+	</select>
+	
+	<select id="mList" parameterType="paging" resultType="member"> 
+		SELECT * FROM MEMBERLIST WHERE RN BETWEEN #{startRow} AND #{endRow} 
+	</select>
+	
+	<select id="mSearch" parameterType="search" resultType="member"> 
+		SELECT * FROM SEMIMEM WHERE ${category} LIKE '%${keyword}%' 
+	</select>
+
+	<update id="mModify" parameterType="member">
+		 UPDATE SEMIMEM SET MPW = #{mPw}, MNAME = #{mName}, MBIRTH = #{mBirth}, MEMAIL = #{mEmail}, MPHONE = #{mPhone}, MADDR = #{mAddr}, MPROFILENAME = #{mProfileName} WHERE MID = #{mId} 
+ 	</update>
+ 
+	<delete id="mDelete" parameterType="String"> 
+		DELETE FROM SEMIMEM WHERE MID = #{mId} 
+	</delete>
+	
+	<update id="pUp" parameterType="member">
+    	UPDATE SEMIMEM SET MPOINTS = MPOINTS + 10 WHERE MID = #{mId}
+	</update>
+	
+
+</mapper>

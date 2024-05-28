@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="POINT">
+    <select id="getPointsById" parameterType="string" resultType="int">
+        SELECT MPOINTS FROM SEMIMEM WHERE MID = #{id}
+    </select>
+
+    <update id="updatePoints">
+        UPDATE SEMIMEM SET MPOINTS = #{points} WHERE MID = #{id}
+    </update>
+
+    <insert id="saveReservation" parameterType="com.icia.semi.dto.Reserv">
+        INSERT INTO RESERV (RNUM, RID, NAME, EMAIL, PHONE, EVENT, RADDR, MESSAGE, PRICE, RDATE)
+        VALUES (R_SEQ.NEXTVAL, #{rid}, #{name}, #{email}, #{phone}, #{event}, #{rAddr}, #{message}, #{price}, SYSDATE)
+    </insert>
+    
+    <select id="getChangeHistory" parameterType="string" resultType="com.icia.semi.dto.Reserv">
+        SELECT RNUM, RID, NAME, EMAIL, PHONE, EVENT, RADDR, MESSAGE, PRICE, RDATE 
+        FROM RESERV 
+        WHERE RID = #{id} 
+    </select>
+</mapper>

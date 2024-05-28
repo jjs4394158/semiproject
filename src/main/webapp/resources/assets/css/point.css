@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+/* main-content 클래스를 가진 요소 내부 스타일링 */
+.main-content {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-content button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.main-content .calendar-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.main-content #attendanceCalendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.main-content .day {
+    padding: 10px;
+    background: #e0e0e0;
+    border-radius: 5px;
+}
+
+.main-content .today {
+    background: #ffd700;
+}
+
+.main-content .present {
+    background: #90ee90;
+}
+
+.main-content .transparent-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}

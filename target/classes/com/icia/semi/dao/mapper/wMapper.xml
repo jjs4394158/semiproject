@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WEBTOON">
+    <select id="webtoon" resultType="webtoon"> 
+        SELECT * FROM WEBTOON ORDER BY WID 
+    </select>
+    
+    <select id="SWBP" parameterType="string" resultType="webtoon">
+        SELECT * FROM WEBTOON WHERE PLATFORM = #{platform}
+    </select>
+    
+    <select id="SWBG" parameterType="string" resultType="webtoon">
+        SELECT * FROM WEBTOON WHERE GENRES LIKE '%' || #{genre} || '%'
+    </select>
+    
+    <select id="SWBPAG" parameterType="map" resultType="webtoon">
+        SELECT * FROM WEBTOON WHERE PLATFORM = #{platform} AND GENRES LIKE '%' || #{genre} || '%'
+    </select>
+    
+    <select id="SAW" resultType="webtoon">
+        SELECT * FROM WEBTOON
+    </select>
+</mapper>

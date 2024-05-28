@@ -1,0 +1,97 @@
+.Homepage_searchControlsContainer__N2M0O {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #072146; /* Matching the background color in the image */
+}
+
+.Homepage_searchControlInnerContainer__MmFlO {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.GlobalTabs_tabContainer__ODFhO {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.GlobalTabs_wrapper__N2I5Z button {
+    margin: 0 10px;
+}
+
+.Homepage_headerStrapline__OWVjZ {
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.SearchControls_grid__ZmQzN {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.SearchControls_origin__Yzg4Y,
+.SearchControls_destinationContainer__NTg1Z,
+.DateSearchControlsGroup_desktopDatesContainer__YTIwM,
+.CabinClassTravellerSearchControlGroup_travellerContainer__NzJlM,
+.SearchControls_directFlights__ZmMwY {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.SearchControls_origin__Yzg4Y label,
+.SearchControls_destinationContainer__NTg1Z label,
+.DateSearchControlsGroup_desktopDatesContainer__YTIwM button,
+.CabinClassTravellerSearchControlGroup_travellerContainer__NzJlM button,
+.SearchControls_directFlights__ZmMwY label {
+    display: flex;
+    flex-direction: column;
+}
+
+.AutoSuggest_inputWrapper__OTRkM input {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.SearchControlButton_searchControlBtn__YTQxZ {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.SearchControls_directFlights__ZmMwY label {
+    display: flex;
+    align-items: center;
+}
+
+.SearchControls_directFlights__ZmMwY input {
+    margin-right: 5px;
+}
+
+.SearchControls_desktopCTA__MjcwM {
+    background-color: #0072ff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.SearchControls_desktopCTA__MjcwM:hover {
+    background-color: #005bb5;
+}

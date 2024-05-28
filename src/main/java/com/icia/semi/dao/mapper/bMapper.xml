@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BOARD">
+	<insert id="bWrite" parameterType="board">
+    INSERT INTO SEMIBOARD VALUES (BOR_SEQ.NEXTVAL, #{bWriter}, #{bTitle}, #{bContents}, SYSDATE, 0, #{bFileName}, 0, 0)
+</insert>
+
+
+	<select id="bList" resultType="board">
+		SELECT * FROM SEMIBOARD ORDER BY BNUM DESC
+	</select>
+
+	<select id="bView" parameterType="int" resultType="board">
+		SELECT * FROM
+		SEMIBOARD WHERE BNUM = #{bNum}
+
+	</select>
+
+	<update id="bCount" parameterType="int">
+		UPDATE SEMIBOARD SET BHIT =
+		BHIT+1 WHERE BNUM = #{bNum}
+	</update>
+
+	<update id="bModify" parameterType="board">
+		UPDATE SEMIBOARD SET BWRITER
+		= #{bWriter}, BTITLE = #{bTitle},
+		BCONTENTS=#{bContents},
+		BFILENAME=#{bFileName} WHERE BNUM = #{bNum}
+	</update>
+
+	<delete id="bDelete" parameterType="int">
+		DELETE FROM SEMIBOARD WHERE
+		BNUM = #{bNum}
+	</delete>
+
+	<select id="bCtn" resultType="int">
+		SELECT COUNT(*) FROM SEMIBOARD
+	</select>
+
+	<select id="pList" parameterType="paging" resultType="board">
+		SELECT *
+		FROM BOARDLIST WHERE RN BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+	<select id="bSearch" parameterType="search" resultType="board">
+		SELECT *
+		FROM SEMIBOARD WHERE ${category} LIKE '%${keyword}%'
+	</select>
+
+
+	<!-- 좋아요 관련 쿼리 추가 -->
+	<select id="checkUserLike" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM LIKE_BOARD WHERE bNum = #{bNum} AND userId = #{userId}
+    </select>
+
+    <insert id="addUserLike" parameterType="map">
+        INSERT INTO LIKE_BOARD (bNum, userId) VALUES (#{bNum}, #{userId})
+    </insert>
+
+    <update id="incrementLikeCount" parameterType="int">
+        UPDATE SEMIBOARD SET BLikes = BLikes + 1 WHERE BNUM = #{bNum}
+    </update>
+
+    <select id="getLikeCount" parameterType="int" resultType="int">
+        SELECT BLikes FROM SEMIBOARD WHERE BNUM = #{bNum}
+    </select>
+
+
+    <!-- 게시글 신고 -->
+    <update id="reportPost" parameterType = "int">
+		UPDATE SEMIBOARD
+		SET REPORTED = 1
+		WHERE bNum = #{bNum}
+	</update>
+
+
+</mapper>

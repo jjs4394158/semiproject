@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="COMMENT">
+
+	<!-- 댓글 목록 -->
+    <select id="cList" parameterType="int" resultType="comment">
+        SELECT CNUM, CBNUM, CWRITER, CCONTENTS, CDATE, CSECRET, 
+        (SELECT COUNT(*) FROM LIKE_COMMENT WHERE COMMENT_ID = CNUM) AS LIKES
+        FROM SEMICOM
+        WHERE CBNUM = #{cbNum}
+    </select>
+    
+    <!-- 댓글 작성 -->
+    <insert id="cWrite" parameterType="comment"> 
+        INSERT INTO SEMICOM (CNUM, CBNUM, CWRITER, CCONTENTS, CDATE, CSECRET)
+        VALUES (CMT_SEQ.NEXTVAL, #{cbNum}, #{cWriter}, #{cContents}, SYSDATE, #{cSecret})
+    </insert>
+    
+    <!-- 댓글 수정 -->
+    <update id="cModify" parameterType="comment">
+        UPDATE SEMICOM
+        SET CCONTENTS = #{cContents}, CSECRET = #{cSecret}
+        WHERE CNUM = #{cNum} AND CBNUM = #{cbNum}
+    </update>
+    
+    <!-- 댓글 삭제 -->
+    <delete id="cDelete" parameterType="comment">
+        DELETE FROM SEMICOM
+        WHERE CNUM = #{cNum} AND CBNUM = #{cbNum}
+    </delete>
+
+    <!-- 좋아요 추가 -->
+    <insert id="addLike" parameterType="map">
+        INSERT INTO LIKE_COMMENT (ID, COMMENT_ID, USER_ID)
+        VALUES (LIKE_SEQ.NEXTVAL, #{commentId}, #{userId})
+    </insert>
+    
+    <!-- 좋아요 체크 -->
+    <select id="checkLike" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM LIKE_COMMENT
+        WHERE COMMENT_ID = #{commentId} AND USER_ID = #{userId}
+    </select>
+    
+    <!-- 게시글 삭제시 FK 제약조건에 의한 댓글 삭제 -->
+    <delete id="bcDelete" parameterType="comment">
+        DELETE FROM SEMICOM
+        WHERE CBNUM = #{bNum}
+    </delete>
+	
+</mapper>

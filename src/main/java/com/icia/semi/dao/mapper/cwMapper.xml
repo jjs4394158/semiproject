@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CWEBTOON">
+	<insert id="cwWrite" parameterType="cwebtoon">
+		INSERT INTO CWSEMIBOARD
+		VALUES (CW_SEQ.NEXTVAL, #{cwWriter}, #{cwTitle}, SYSDATE, #{cwFileName}, #{cwContents}, 0, 0)
+	</insert>
+
+
+	<select id="cwList" resultType="cwebtoon">
+		SELECT * FROM CWSEMIBOARD ORDER
+		BY CWNUM DESC
+	</select>
+
+	<select id="cwView" parameterType="int" resultType="cwebtoon">
+		SELECT * FROM
+		CWSEMIBOARD WHERE CWNUM = #{cwNum}
+	</select>
+
+	<update id="cwCount" parameterType="int">
+		UPDATE CWSEMIBOARD SET CWHIT
+		=
+		CWHIT+1 WHERE CWNUM = #{cwNum}
+	</update>
+
+	<update id="cwModify" parameterType="cwebtoon">
+		UPDATE CWSEMIBOARD
+		<set>
+			<if test="cwWriter != null">
+				CWWRITER = #{cwWriter, jdbcType=VARCHAR},
+			</if>
+			<if test="cwTitle != null">
+				CWTITLE = #{cwTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="cwContents != null">
+				CWCONTENTS = #{cwContents, jdbcType=VARCHAR},
+			</if>
+			<if test="cwFileName != null">
+				CWFILENAME = #{cwFileName, jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE CWNUM = #{cwNum, jdbcType=INTEGER}
+	</update>
+
+
+
+	<delete id="cwDelete" parameterType="int">
+		DELETE FROM CWSEMIBOARD
+		WHERE
+		CWNUM = #{cwNum}
+	</delete>
+
+	<select id="cwCtn" resultType="int">
+		SELECT COUNT(*) FROM CWSEMIBOARD
+	</select>
+
+	<select id="pList" parameterType="paging" resultType="cwebtoon">
+		SELECT *
+		FROM CWBOARDLIST WHERE RN BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+	<select id="cwSearch" parameterType="search"
+		resultType="cwebtoon">
+		SELECT *
+		FROM CWSEMIBOARD WHERE ${category} LIKE
+		'%${keyword}%'
+	</select>
+
+
+	<!-- 좋아요 관련 쿼리 추가 -->
+	<select id="checkUserLike" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM LIKE_CWBOARD WHERE cwNum = #{cwNum} AND userId =
+		#{userId}
+	</select>
+
+	<insert id="addUserLike" parameterType="map">
+		INSERT INTO LIKE_CWBOARD
+		(cwNum, userId) VALUES (#{cwNum}, #{userId})
+	</insert>
+
+	<update id="incrementLikeCount" parameterType="int">
+		UPDATE CWSEMIBOARD
+		SET CWLikes = CWLikes + 1 WHERE CWNUM = #{cwNum}
+	</update>
+
+	<select id="getLikeCount" parameterType="int" resultType="int">
+		SELECT
+		CWLikes FROM CWSEMIBOARD WHERE CWNUM = #{cwNum}
+	</select>
+
+
+	<!-- 게시글 신고 -->
+	<update id="reportPost" parameterType="int">
+		UPDATE CWSEMIBOARD SET
+		REPORTED = 1 WHERE CWNUM = #{cwNum}
+	</update>
+
+
+</mapper>
